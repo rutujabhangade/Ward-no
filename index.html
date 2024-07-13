@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ward Number</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('/water.jpg');
+            background-repeat: no-repeat;
+            background-size: 100%;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+            padding-bottom: 20px;
+            text-shadow: 15px 10px 10px white;
+        }
+        
+        .btn-custom {
+            background-color: rgb(253, 253, 253);
+            box-shadow: 2px 2px 3px 3px #000000;
+            margin: 5px;
+            width: 100px;
+        }
+        
+        .container {
+            padding-top: 93px;
+        }
+
+        #buttons-container {
+            flex-direction: column;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container text-center">
+        <div class="box"></div>
+        <h1>Ward Number</h1>
+        <div id="buttons-container" class="d-flex flex-column align-items-center">
+            <button class="btn btn-custom btn-sm">Ward 1</button>
+            <button class="btn btn-custom btn-sm">Ward 2</button>
+            <button class="btn btn-custom btn-sm">Ward 3</button>
+            <button class="btn btn-custom btn-sm">Ward 4</button>
+            <button class="btn btn-custom btn-sm">Ward 5</button>
+            <button class="btn btn-custom btn-sm">Ward 6</button>
+            <button class="btn btn-custom btn-sm">Ward 7</button>
+            <button class="btn btn-custom btn-sm">Ward 8</button>
+            <button class="btn btn-custom btn-sm">Ward 9</button>
+            <button class="btn btn-custom btn-sm">Ward 10</button>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Add your custom JavaScript here -->
+    <script>
+        const wardData = {
+            1: '2024-07-14 08:00 AM',
+            2: '2024-07-14 09:00 AM',
+            3: '2024-07-14 10:00 AM',
+            4: '2024-07-14 11:00 AM',
+            5: '2024-07-14 12:00 PM',
+            6: '2024-07-14 01:00 PM',
+            7: '2024-07-14 02:00 PM',
+            8: '2024-07-14 03:00 PM',
+            9: '2024-07-14 04:00 PM',
+            10: '2024-07-14 05:00 PM'
+        };
+
+        document.querySelectorAll('.btn-custom').forEach(button => {
+            button.addEventListener('click', function () {
+                const wardNumber = this.textContent.split(' ')[1];
+                const schedule = wardData[wardNumber];
+                saveToCSV(wardNumber, schedule);
+            });
+        });
+
+        function saveToCSV(wardNumber, schedule) {
+            const csvData = `Ward Number,Supply Time\n${wardNumber},${schedule}\n`;
+            const blob = new Blob([csvData], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.setAttribute('hidden', '');
+            a.setAttribute('href', url);
+            a.setAttribute('download', 'ward_schedule.csv');
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+    </script>
+</body>
+
+</html>
